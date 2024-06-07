@@ -1,13 +1,94 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  background-color: #fafafa;
+}
+
+.card {
+  width: 300px;
+  height: 520px;
+  margin: 25px;
+  display: inline-block;
+  box-sizing: content-box;
+  border-radius: 6px;
+  border: #e3e3e3 2px solid;
+  overflow: hidden;
+  background-color: white;
+}
+
+img {
+  margin: auto;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.title {
+  margin: 15px 0 5px 20px;
+  font: inherit;
+  font-size: 18px;
+  color: black;
+}
+
+.description {
+  margin: 0 0 5px 20px;
+  font: inherit;
+  color: #666666;
+}
+
+.switch_selector {
+  font: inherit;
+  margin: 0 0 5px 20px;
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.price {
+  font-size: 24px;
+  margin: 0 0 5px 20px;
+}
+
+.count_box {
+  margin: 5px 0 5px 20px;
+  display: flex;
+}
+
+input {
+  text-align: center;
+  font: inherit;
+  font-size: 16px;
+  box-sizing: border-box;
+  height: 30px;
+  width: 30px;
+}
+
+.decrease, .increase, .purchase {
+  border: #666666 1px solid;
+}
+
+.decrease {
+  border-radius: 5px 0 0 5px;
+}
+
+.increase {
+  border-radius: 0 5px 5px 0;
+}
+
+.purchase {
+  width: 60px;
+  border-radius: 5px;
+  background-color: #70b32b;
+  margin-left: 10px;
+}
+
+.count {
+  width: 60px;
 }
