@@ -17,7 +17,7 @@ function GetProductCards() {
         key={element.id}
         id={element.id}
         title={element.title} description={element.description}
-        price={element.price} image={element.image_path}
+        price={element.price} image={`${process.env.PUBLIC_URL}${element.image_path}`}
         switches={element.mechanical ? SWITCHES : null}
       />);
   });
