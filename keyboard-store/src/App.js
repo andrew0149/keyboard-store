@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetShopItems, PlaceOrder } from './Api';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 
+const SWITCHES = new Map([['blue', 'Синие'], ['red', 'Красные'], ['black', 'Черные']]);
+
 function GetProductCards() {
   var ShopItems = GetShopItems();
   var output = [];
@@ -16,7 +18,7 @@ function GetProductCards() {
         id={element.id}
         title={element.title} description={element.description}
         price={element.price} image={element.image_path}
-        switches={new Map([['blue', 'Синие'], ['red', 'Красные'], ['black', 'Черные']])}
+        switches={element.mechanical ? SWITCHES : null}
       />);
   });
   return output;

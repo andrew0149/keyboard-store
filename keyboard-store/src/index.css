@@ -25,7 +25,7 @@ body {
 }
 
 .card {
-  max-width: 300px;
+  width: 300px;
   max-height: 520px;
   margin: 25px;
   display: inline-block;
@@ -38,6 +38,7 @@ body {
 
 .product_image {
   margin: auto;
+  margin-top: 0;
   width: 300px;
   height: 300px;
   overflow: hidden;
@@ -83,7 +84,9 @@ input {
   width: 30px;
 }
 
-.decrease, .increase, .purchase {
+.decrease,
+.increase,
+.purchase {
   border: #666666 1px solid;
 }
 

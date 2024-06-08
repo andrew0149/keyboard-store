@@ -4,7 +4,7 @@ import { GetShopItems, PlaceOrder } from '../Api';
 export default function ProductOrderCard(props) {
     const [count, setCount] = useState(1);
     const [switchCoeff, setSwitchCoeff] = useState(1.0);
-    const switchesKeyValuePairs = Array.from(props.switches);
+    const switchesKeyValuePairs = props.switches ? Array.from(props.switches) : null;
     const id = props.id
     function handleSwitchTypeChange(element) {
         switch (element.target.value) {
@@ -43,20 +43,22 @@ export default function ProductOrderCard(props) {
 
             <p className="description">{props.description}</p>
 
-            <select
-                onChange={e => handleSwitchTypeChange(e)}
-                className="switch_selector" >
-                <optgroup label="Типы свитчей" />
-                {
-                    switchesKeyValuePairs.map(
-                        (pair, key) => <option key={key} value={pair[0]}>{pair[1]}</option>
-                    )
-                }
-            </select>
+            {
+                !props.switches ? ' ' : <select
+                    onChange={e => handleSwitchTypeChange(e)}
+                    className="switch_selector" >
+                    <optgroup label="Типы свитчей" />
+                    {
+                        switchesKeyValuePairs.map(
+                            (pair, key) => <option key={key} value={pair[0]}>{pair[1]}</option>
+                        )
+                    }
+                </select>
+            }
 
             <br />
 
-            <span className="price">{props.price * count * switchCoeff}₽</span>
+            <span className="price">{Math.round(props.price * count * switchCoeff)}₽</span>
 
             <div className="count_box">
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
