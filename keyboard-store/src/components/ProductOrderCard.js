@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import {GetShopItems, PlaceOrder} from '../Api';
+import { GetShopItems, PlaceOrder } from '../Api';
+
 export default function ProductOrderCard(props) {
     const [count, setCount] = useState(1);
     const [switchCoeff, setSwitchCoeff] = useState(1.0);
@@ -36,7 +37,7 @@ export default function ProductOrderCard(props) {
 
     return (
         <div className="card">
-            <img src={props.image} alt={props.title} />
+            <img className="product_image" src={props.image} alt={props.title} />
 
             <h3 className="title">{props.title}</h3>
 
@@ -48,7 +49,7 @@ export default function ProductOrderCard(props) {
                 <optgroup label="Типы свитчей" />
                 {
                     switchesKeyValuePairs.map(
-                        pair => <option value={pair[0]}>{pair[1]}</option>
+                        (pair, key) => <option key={key} value={pair[0]}>{pair[1]}</option>
                     )
                 }
             </select>
@@ -60,9 +61,9 @@ export default function ProductOrderCard(props) {
             <div className="count_box">
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
                 <input type="text" value={count} className="count" readOnly="readonly" />
-                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= 10}/>
+                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= 10} />
                 <input type="button" value="🛒" className="purchase" onClick={addToCart} />
-                <input type="button" value="place order" onClick={() => PlaceOrder(['kek@lol.com', '8989898988', 'Strannik', [1, 2]])}/>
+                {/* <input type="button" value="place order" onClick={() => PlaceOrder('kek@lol.com', '8989898988', 'Strannik', [props.id])} /> */}
             </div>
 
         </div>

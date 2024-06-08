@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,9 +15,18 @@ body {
   background-color: #fafafa;
 }
 
+.wrapper {
+  padding-top: 50px;
+  height: 100vh;
+}
+
+#products {
+  display: flex;
+}
+
 .card {
-  width: 300px;
-  height: 520px;
+  max-width: 300px;
+  max-height: 520px;
   margin: 25px;
   display: inline-block;
   box-sizing: content-box;
@@ -23,7 +36,7 @@ body {
   background-color: white;
 }
 
-img {
+.product_image {
   margin: auto;
   width: 300px;
   height: 300px;
