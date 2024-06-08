@@ -4,7 +4,7 @@ const app = express()
 const port = 8080
 const cors = require("cors");
 app.use(cors());
-
+app.use(express.json())
 const pool = new Pool({
     user: 'store',
     host: 'localhost',
@@ -26,7 +26,24 @@ app.get('/products_list', async (req, res) => {
         res.status(500).send('error accessing database');
         }
 })
-
+app.post('/place_order', async (req, res) => {
+	try{
+	 const reply = await req.body;
+	 try{
+	  
+	  const values = await reply["values"];	 
+	  const query = `insert into orders ("email", "phone", "name", "keyboard_ids") values ($1, $2, $3, $4) returning id`;
+	 
+	 const result = await pool.query(query, values);
+	 res.status(201).send({ message: 'Order placed', orderID: result.rows[0].id});
+	 }
+	catch (err){
+	console.log(err)}
+	}
+	catch (err){
+	console.log(err)
+	res.status(500).send('some error has occured');}
+})
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
