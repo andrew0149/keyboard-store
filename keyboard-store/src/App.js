@@ -1,6 +1,17 @@
+import GetShopItems from './Api';
 import './components/ProductOrderCard'
 import ProductOrderCard from './components/ProductOrderCard';
 import { Navbar, Container, } from 'react-bootstrap';
+
+function GetProductCards(){
+  var ShopItems = GetShopItems()
+  var output = new Array([])
+  ShopItems.forEach(element => {
+    var Item = Object.values(element)
+    output.push(<ProductOrderCard title={Item[0]} price={Item[2]} description={Item[1]} image={Item[3]} switches={new Map([['blue', 'Синие'], ['red', 'Красные'], ['black', 'Черные']])}></ProductOrderCard>)
+  });
+  return output
+}
 
 function App() {
   return (
@@ -19,7 +30,9 @@ function App() {
 
       <div className='wrapper'>
         <div className='products_list'>
-          <ProductOrderCard title='A' price='1000' description='Abcdef' image='' switches={new Map([['blue', 'Синие'], ['red', 'Красные']])}></ProductOrderCard>
+          {
+            GetProductCards()
+          }
         </div>
       </div>
 
