@@ -32,10 +32,14 @@ app.post('/place_order', async (req, res) => {
 	 try{
 	  
 	  const values = await reply["values"];	 
-	  const query = `insert into orders ("email", "phone", "name", "keyboard_ids") values ($1, $2, $3, $4) returning id`;
-	 
-	 const result = await pool.query(query, values);
-	 res.status(201).send({ message: 'Order placed', orderID: result.rows[0].id});
+	  const query = `insert into orders ("email", "phone", "name","amount", "keyboard_ids") values ($1, $2, $3, $4, $5) returning id`;	 
+	  const result = await pool.query(query, values);
+	  const update_query = `update shoplist set stock = stock - $1 where id = $2;`
+	  for(index in values[4]){
+		update_values = [values[3][index], values[4][index]]
+		const update_result = await pool.query(update_query, update_values);
+	  }
+	  res.status(201).send({ message: 'Order placed', orderID: result.rows[0].id});
 	 }
 	catch (err){
 	console.log(err)}
