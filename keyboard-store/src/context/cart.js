@@ -8,6 +8,8 @@ export const CartProvider = ({ children }) => {
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
+        console.log(item);
+
         if (isItemInCart) {
             setCartItems(
                 cartItems.map((cartItem) =>

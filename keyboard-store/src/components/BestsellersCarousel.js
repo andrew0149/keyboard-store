@@ -12,7 +12,7 @@ export default function BestsellersCarousel() {
 
     const bestsellers = GetBestsellers();
     
-    return (bestsellers.length == 0 ? <></> :
+    return (bestsellers.length === 0 ? <></> :
         <Carousel activeIndex={index} onSelect={handleSelect} interval={3000}>
             {
                 bestsellers.map((element, key) =>

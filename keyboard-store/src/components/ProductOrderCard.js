@@ -63,7 +63,10 @@ export default function ProductOrderCard(product) {
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
                 <input type="text" value={count} className="count" readOnly="readonly" />
                 <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= product.max_order} />
-                <input type="button" value=" " className="purchase" onClick={() => addToCart(product)} />
+                <input type="button" value=" " className="purchase"
+                    onClick={() => {
+                        addToCart({...product, switchCoeff});
+                    }} />
             </div>
 
         </div>

@@ -38,11 +38,13 @@ function GetBestsellers() {
     }
 }
 
-function PlaceOrder(email, phone, name, amount, id) {
+function PlaceOrder(email, phone, name, amounts, ids, switches) {
     var apiUrl = Connect(ADDRESS, PORT);
     var xmlHttp = new XMLHttpRequest();
 
-    var json = JSON.stringify({ "values": [email, phone, name, amount, id] });
+    console.log(email, phone, name, amounts, ids, switches);
+
+    var json = JSON.stringify({ "values": [email, phone, name, amounts, ids, switches] });
     xmlHttp.open("POST", `${apiUrl}/place_order`, false);
     xmlHttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xmlHttp.send(json);

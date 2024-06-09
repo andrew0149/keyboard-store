@@ -82,6 +82,7 @@ body {
 
 #products {
   display: flex;
+  flex-wrap: wrap;
   padding-top: 50px;
 }
 
@@ -198,4 +199,41 @@ input {
 
 .count {
   width: 60px;
+}
+
+.cart_item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  height: 45px;
+}
+
+.cart_item_info {
+  display: flex;
+}
+
+.cart_item_title {
+  margin-left: 10px;
+  font: inherit;
+  font-size: 20px;
+}
+
+.cart_item_image {
+  height: auto;
+  width: 75px;
+}
+
+.cart_count_box {
+  display: flex;
+}
+
+.cart_input {
+  width: 50%;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.modal-footer {
+  justify-content: space-between !important;
 }
