@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { GetShopItems, PlaceOrder } from '../Api';
 
 export default function ProductOrderCard(props) {
     const [count, setCount] = useState(1);
     const [switchCoeff, setSwitchCoeff] = useState(1.0);
     const switchesKeyValuePairs = props.switches ? Array.from(props.switches) : null;
-    const id = props.id
+
     function handleSwitchTypeChange(element) {
         switch (element.target.value) {
             case 'blue':
@@ -64,8 +63,8 @@ export default function ProductOrderCard(props) {
             <div className="count_box">
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
                 <input type="text" value={count} className="count" readOnly="readonly" />
-                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= 10} />
-                <input type="button" value="🛒" className="purchase" onClick={addToCart} />
+                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= props.max_order} />
+                <input type="button" value=" " className="purchase" onClick={addToCart}/>
                 {/* <input type="button" value="place order" onClick={() => PlaceOrder('kek@lol.com', '8989898988', 'Strannik',[1], [props.id])} /> */}
             </div>
 

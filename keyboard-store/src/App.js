@@ -3,11 +3,6 @@ import NavigationBar from './components/NavigationBar';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { GetShopItems, PlaceOrder } from './Api';
-
-
-
-
 function App() {
   return (
     <div className='app'>
