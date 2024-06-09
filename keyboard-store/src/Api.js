@@ -16,11 +16,11 @@ function GetShopItems() {
     return response;
 }
 
-function PlaceOrder(email, phone, name, id) {
+function PlaceOrder(email, phone, name, amount, id) {
     var apiUrl = Connect(ADDRESS, PORT);
     var xmlHttp = new XMLHttpRequest();
 
-    var json = JSON.stringify({"values": [email, phone, name, id]});
+    var json = JSON.stringify({"values": [email, phone, name, amount, id]});
     xmlHttp.open("POST", `${apiUrl}/place_order`, false);
     xmlHttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xmlHttp.send(json);

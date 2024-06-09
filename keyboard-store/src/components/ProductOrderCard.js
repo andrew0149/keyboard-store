@@ -66,7 +66,7 @@ export default function ProductOrderCard(props) {
                 <input type="text" value={count} className="count" readOnly="readonly" />
                 <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= 10} />
                 <input type="button" value="🛒" className="purchase" onClick={addToCart} />
-                {/* <input type="button" value="place order" onClick={() => PlaceOrder('kek@lol.com', '8989898988', 'Strannik', [props.id])} /> */}
+                {/* <input type="button" value="place order" onClick={() => PlaceOrder('kek@lol.com', '8989898988', 'Strannik',[1], [props.id])} /> */}
             </div>
 
         </div>
