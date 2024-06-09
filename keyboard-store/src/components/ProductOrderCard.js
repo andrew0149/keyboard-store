@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import { React, useState, useContext, useEffect } from "react";
+import { CartContext } from "../context/cart";
 
-export default function ProductOrderCard(props) {
+
+export default function ProductOrderCard(product) {
+    const { cartItems, addToCart } = useContext(CartContext);
     const [count, setCount] = useState(1);
     const [switchCoeff, setSwitchCoeff] = useState(1.0);
-    const switchesKeyValuePairs = props.switches ? Array.from(props.switches) : null;
+    const switchesKeyValuePairs = product.switches ? Array.from(product.switches) : null;
 
     function handleSwitchTypeChange(element) {
         switch (element.target.value) {
@@ -30,21 +33,17 @@ export default function ProductOrderCard(props) {
         setCount(count - 1);
     }
 
-    function addToCart() {
-
-    }
-
     return (
-        <div className="product_card">
+        <div className="product_card" id={product.id}>
             <div className="image_block">
-                <img className="product_image" src={props.image} alt={props.title} />
+                <img className="product_image" src={product.image} alt={product.title} />
             </div>
-            <h3 className="title">{props.title}</h3>
+            <h3 className="title">{product.title}</h3>
 
-            <p className="description">{props.description}</p>
+            <p className="description">{product.description}</p>
 
             {
-                !props.switches ? ' ' : <select
+                !product.switches ? ' ' : <select
                     onChange={e => handleSwitchTypeChange(e)}
                     className="switch_selector" >
                     <optgroup label="Типы свитчей" />
@@ -58,14 +57,13 @@ export default function ProductOrderCard(props) {
 
             <br />
 
-            <span className="price">{Math.round(props.price * count * switchCoeff)}₽</span>
+            <span className="price">{Math.round(product.price * count * switchCoeff)}₽</span>
 
             <div className="count_box">
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
                 <input type="text" value={count} className="count" readOnly="readonly" />
-                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= props.max_order} />
-                <input type="button" value=" " className="purchase" onClick={addToCart}/>
-                {/* <input type="button" value="place order" onClick={() => PlaceOrder('kek@lol.com', '8989898988', 'Strannik',[1], [props.id])} /> */}
+                <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= product.max_order} />
+                <input type="button" value=" " className="purchase" onClick={() => addToCart(product)} />
             </div>
 
         </div>

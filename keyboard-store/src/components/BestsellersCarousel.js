@@ -1,16 +1,7 @@
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselElement from './CarouselElement';
-
-import carouselimage1 from '../images/carouselimage1.webp';
-import carouselimage2 from '../images/carouselimage2.webp';
-import carouselimage3 from '../images/carouselimage3.webp';
-
-const CAROUSEL_ELEMENTS = [
-    { image: carouselimage1, title: 'Keyboard #1', description: 'Keyboard #1 is best!' },
-    { image: carouselimage2, title: 'Keyboard #2', description: 'Keyboard #2 is best!' },
-    { image: carouselimage3, title: 'Keyboard #3', description: 'Keyboard #3 is best!' }
-];
+import { GetBestsellers } from '../Api';
 
 export default function BestsellersCarousel() {
     const [index, setIndex] = useState(0);
@@ -19,12 +10,17 @@ export default function BestsellersCarousel() {
         setIndex(selectedIndex);
     };
 
-    return (
+    const bestsellers = GetBestsellers();
+    
+    return (bestsellers.length == 0 ? <></> :
         <Carousel activeIndex={index} onSelect={handleSelect} interval={3000}>
             {
-                CAROUSEL_ELEMENTS.map((element, key) =>
+                bestsellers.map((element, key) =>
                     <Carousel.Item key={key}>
-                        <CarouselElement image={element.image} title={element.title} description={element.description} />
+                        <CarouselElement
+                            image={`${process.env.PUBLIC_URL}${element.image_path}`}
+                            title={element.title} description={element.description} id={element.id}
+                        />
                     </Carousel.Item>)
             }
         </Carousel>
