@@ -36,7 +36,7 @@ export default function ProductOrderCard(props) {
     }
 
     return (
-        <div className="card">
+        <div className="product_card">
             <div className="image_block">
                 <img className="product_image" src={props.image} alt={props.title} />
             </div>
