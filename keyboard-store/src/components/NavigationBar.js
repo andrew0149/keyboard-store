@@ -2,7 +2,7 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 
 import logo from '../images/logo.png';
 
-export default function NavigationBar(props) {
+export default function NavigationBar() {
     return (
         <Navbar className="navbar" expand="lg" data-bs-theme="dark" fixed="top" bg="$blue-900">
             <Container>

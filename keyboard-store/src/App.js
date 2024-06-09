@@ -1,5 +1,6 @@
-import Products from './components/Products';
 import NavigationBar from './components/NavigationBar';
+import BestsellersCarousel from './components/BestsellersCarousel';
+import Products from './components/Products';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,6 +10,7 @@ function App() {
       <NavigationBar />
 
       <div className='wrapper' id='bestsellers'>
+        <BestsellersCarousel />
       </div>
 
       <div className='wrapper' id='products'>
