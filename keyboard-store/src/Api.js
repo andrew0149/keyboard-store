@@ -7,23 +7,45 @@ function Connect(address, port) {
 
 function GetShopItems() {
     var apiUrl = Connect(ADDRESS, PORT);
-    var xmlHttp = new XMLHttpRequest();
-    
-    xmlHttp.open("GET", `${apiUrl}/products_list`, false);
-    xmlHttp.send();
+    try {
+        var xmlHttp = new XMLHttpRequest();
 
-    var response = JSON.parse(xmlHttp.response);
-    return response;
+        xmlHttp.open("GET", `${apiUrl}/products_list`, false);
+        xmlHttp.send();
+
+        var response = JSON.parse(xmlHttp.response);
+        return response;
+    } catch (exception) {
+        console.log(exception);
+        return [];
+    }
+
+}
+
+function GetBestsellers() {
+    var apiUrl = Connect(ADDRESS, PORT);
+    try {
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open("GET", `${apiUrl}/bestsellers_list`, false);
+        xmlHttp.send();
+
+        var response = JSON.parse(xmlHttp.response);
+        return response;
+    } catch (exception) {
+        console.log(exception);
+        return [];
+    }
 }
 
 function PlaceOrder(email, phone, name, amount, id) {
     var apiUrl = Connect(ADDRESS, PORT);
     var xmlHttp = new XMLHttpRequest();
 
-    var json = JSON.stringify({"values": [email, phone, name, amount, id]});
+    var json = JSON.stringify({ "values": [email, phone, name, amount, id] });
     xmlHttp.open("POST", `${apiUrl}/place_order`, false);
     xmlHttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xmlHttp.send(json);
 }
 
-export { GetShopItems, PlaceOrder };
+export { GetShopItems, GetBestsellers, PlaceOrder };
