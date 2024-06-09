@@ -5,6 +5,9 @@
 #config
 keyboard-store/src/config/Config.js
 
+#images
+keyboard-store/public/images/**
+
 # testing
 **/coverage
 
