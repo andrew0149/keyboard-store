@@ -197,6 +197,11 @@ input {
   background-size: 20px auto;
   background-color: #BA181B;
   margin-left: 10px;
+  transition: all .5s ease;
+}
+
+.purchase:hover {
+  background-color: #E5383B;
 }
 
 .count {
@@ -312,14 +317,19 @@ input {
   width: fit-content;
   border: #161A1D 1px solid;
   border-radius: 5px;
-  background-color: #A4161A;
+  background-color: #BA181B;
   color: #F5F3F4;
   font-weight: bold;
+  transition: all .5s ease;
 }
 
 .cart_order_button:disabled {
   background-color: #660708;
   color: #D3D3D3;
+}
+
+.cart_order_button:enabled:hover {
+  background-color: #E5383B;
 }
 
 .modal-footer {

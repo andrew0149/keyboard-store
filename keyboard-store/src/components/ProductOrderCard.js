@@ -1,9 +1,9 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext } from "react";
 import { CartContext } from "../context/cart";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default function ProductOrderCard(product) {
-    const { cartItems, addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext);
     const [count, setCount] = useState(1);
     const [switchType, setSwitchType] = useState(
         [
@@ -75,8 +75,9 @@ export default function ProductOrderCard(product) {
                 <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= product.max_order} />
                 <OverlayTrigger
                     placement="top"
-                    delay={{ show: 250, hide: 400 }}
+                    delay={{show: 1e13, hide: 300}}
                     overlay={renderTooltip}
+                    trigger={['hover', 'click']}
                 >
                     <input type="button" value=" " className="purchase"
                         onClick={() => {

@@ -4,12 +4,12 @@ import { useContext } from "react";
 const SWITCHES = new Map([['blue', 'Синие'], ['red', 'Красные'], ['black', 'Черные']]);
 
 export default function CartItem({ item }) {
-    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext);
+    const { addToCart, removeFromCart } = useContext(CartContext);
 
     return (
         <div className="cart_item">
             <div className="cart_item_info">
-                <img src={item.image} className="cart_item_image" />
+                <img src={item.image} alt={item.title} className="cart_item_image" />
                 <span className="cart_item_title">{item.title} {!item.switchType[0] ? null : `(${SWITCHES.get(item.switchType[0])})`}</span>
             </div>
             <div className="cart_count_box">

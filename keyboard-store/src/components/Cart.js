@@ -28,11 +28,11 @@ export default function Cart() {
         var emailIsValid = mailRegex.test(email);
 
         if (document.getElementById('name_error'))
-            document.getElementById('name_error').style.display = nameIsValid ? 'none' : 'block';
+            document.getElementById('name_error').style.display = (nameIsValid || name.length === 0) ? 'none' : 'block';
         if (document.getElementById('phone_error'))
-            document.getElementById('phone_error').style.display = phoneIsValid ? 'none' : 'block';
+            document.getElementById('phone_error').style.display = (phoneIsValid || phone.length === 0) ? 'none' : 'block';
         if (document.getElementById('email_error'))
-            document.getElementById('email_error').style.display = emailIsValid ? 'none' : 'block';
+            document.getElementById('email_error').style.display = (emailIsValid || email.length === 0) ? 'none' : 'block';
         return (nameIsValid && phoneIsValid && emailIsValid);
     }
 
@@ -58,10 +58,13 @@ export default function Cart() {
                 </Modal.Header>
                 <Modal.Body>
                     {
-                        cartItems.length === 0 ? <p>Здесь пока пусто: добавьте, пожалуйста, что-нибудь в корзину 🙏🙏</p> :
-                            cartItems.map((item) => <CartItem item={item} key={`${item.id}-${item.switchType[0]}`} />)
+                        cartItems.length === 0
+                            ? <p style={{ textAlign: 'center' }}>Здесь пока пусто: добавьте, пожалуйста, что-нибудь в корзину 🙏</p>
+                            : <> 
+                                {cartItems.map((item) => <CartItem item={item} key={`${item.id}-${item.switchType[0]}`} />)}
+                                <p className='cart_total'>Сумма заказа: {getCartTotal()}₽</p>
+                            </>
                     }
-                    <p className='cart_total'>Сумма заказа: {getCartTotal()}₽</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <form className='order_form'>
