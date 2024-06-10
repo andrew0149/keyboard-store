@@ -6,7 +6,7 @@ const SWITCHES = new Map([['blue', 'Синие'], ['red', 'Красные'], ['b
 export default function Products(props) {
     var shopItems = GetShopItems();
 
-    return shopItems.map(element =>
+    return shopItems.map(element => element.stock < 1 ? null :
         <ProductOrderCard
             key={element.id}
             id={element.id}

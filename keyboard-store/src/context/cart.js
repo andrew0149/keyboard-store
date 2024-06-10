@@ -5,33 +5,36 @@ export const CartContext = createContext()
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
-    const addToCart = (item) => {
-        const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+    const addToCart = (item, count) => {
+    
+        const isItemInCart = cartItems.find((cartItem) => (cartItem.id === item.id && cartItem.switchType[0] === item.switchType[0]));
 
         console.log(item);
 
         if (isItemInCart) {
             setCartItems(
                 cartItems.map((cartItem) =>
-                    cartItem.id === item.id
-                        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                    (cartItem.id === item.id && cartItem.switchType[0] === item.switchType[0])
+                        ? { ...cartItem, quantity: Math.min(cartItem.quantity + count, cartItem.max_order) }
                         : cartItem
                 )
             );
         } else {
-            setCartItems([...cartItems, { ...item, quantity: 1 }]);
+            setCartItems([...cartItems, { ...item, quantity: count }]);
         }
+
+        console.log(cartItems);
     };
 
     const removeFromCart = (item) => {
-        const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+        const isItemInCart = cartItems.find((cartItem) => (cartItem.id === item.id && cartItem.switchType[0] === item.switchType[0]));
 
         if (isItemInCart.quantity === 1) {
-            setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+            setCartItems(cartItems.filter((cartItem) => !(cartItem.id === item.id && cartItem.switchType[0] === item.switchType[0])));
         } else {
             setCartItems(
                 cartItems.map((cartItem) =>
-                    cartItem.id === item.id
+                    (cartItem.id === item.id && cartItem.switchType[0] === item.switchType[0])
                         ? { ...cartItem, quantity: cartItem.quantity - 1 }
                         : cartItem
                 )
@@ -44,7 +47,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const getCartTotal = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+        return Math.round(cartItems.reduce((total, item) => total + item.price * item.quantity * item.switchType[1], 0));
     };
 
     useEffect(() => {

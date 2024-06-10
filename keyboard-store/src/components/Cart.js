@@ -17,17 +17,41 @@ export default function Cart() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    function checkInputs(name, email, phone) {
+        let nameRegex = /^[a-zA-Zа-яёА-ЯЁ\s-]{2,64}$/;
+        var nameIsValid = nameRegex.test(name);
+
+        let phoneRegex = /^(\+7|8)\s?[(-]?[0-9]{3}[)-]?([-\s]?[0-9]){7}$/;
+        var phoneIsValid = phoneRegex.test(phone);
+
+        let mailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        var emailIsValid = mailRegex.test(email);
+
+        if (document.getElementById('name_error'))
+            document.getElementById('name_error').style.display = nameIsValid ? 'none' : 'block';
+        if (document.getElementById('phone_error'))
+            document.getElementById('phone_error').style.display = phoneIsValid ? 'none' : 'block';
+        if (document.getElementById('email_error'))
+            document.getElementById('email_error').style.display = emailIsValid ? 'none' : 'block';
+        return (nameIsValid && phoneIsValid && emailIsValid);
+    }
+
     const changeHandler = e => {
         setCartInputs({
             ...cartInputs,
             [e.target.id]: e.target.value
-        })
+        });
+
+        checkInputs(
+            e.target.id === 'name' ? e.target.value : cartInputs.name,
+            e.target.id === 'email' ? e.target.value : cartInputs.email,
+            e.target.id === 'phone' ? e.target.value : cartInputs.phone);
     };
 
     const { cartItems, clearCart, getCartTotal } = useContext(CartContext);
     return (
         <>
-            <button type='button' onClick={handleShow}></button>
+            <button type='button' className='cart_open_button' onClick={handleShow}></button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Корзина</Modal.Title>
@@ -35,44 +59,68 @@ export default function Cart() {
                 <Modal.Body>
                     {
                         cartItems.length === 0 ? <p>Здесь пока пусто: добавьте, пожалуйста, что-нибудь в корзину 🙏🙏</p> :
-                            cartItems.map((item) => <CartItem item={item} key={item.id} />)
+                            cartItems.map((item) => <CartItem item={item} key={`${item.id}-${item.switchType[0]}`} />)
                     }
+                    <p className='cart_total'>Сумма заказа: {getCartTotal()}₽</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <input
-                        type='text' placeholder='Иванов Иван'
-                        pattern='' maxLength={64}
-                        className='cart_input'
-                        id='name'
-                        onChange={changeHandler}
-                    />
-                    <br />
-                    <input
-                        type='email' placeholder='example@mail.com'
-                        pattern='^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$' maxLength={64}
-                        className='cart_input'
-                        id='email'
-                        onChange={changeHandler}
-                    />
-                    <br />
-                    <input
-                        type='tel' placeholder='x-xxx-xxx-xx-xx'
-                        pattern=''
-                        className='cart_input'
-                        id='phone'
-                        onChange={changeHandler}
-                    />
-                    <button className='cart_order_button'
-                        onClick={
-                            () => PlaceOrder(
-                                cartInputs.email, cartInputs.phone, cartInputs.name,
-                                cartItems.map((item) => item.quantity),
-                                cartItems.map((item) => item.id),
-                                cartItems.map((item) => item.switchCoeff),
-                            )}></button>
+                    <form className='order_form'>
+                        <input
+                            required={true}
+                            type='text' placeholder='Иванов Иван'
+                            maxLength={32}
+                            className='cart_input'
+                            id='name'
+                            onChange={changeHandler}
+                        />
+                        <span className='input_error' id='name_error'>
+                            Имя должно содержать от 2 до 32 букв!
+                        </span>
+
+                        <input
+                            required={true}
+                            type='email' placeholder='example@mail.com'
+                            className='cart_input'
+                            id='email'
+                            onChange={changeHandler}
+                        />
+                        <span className='input_error' id='email_error'>
+                            Электронная почта должна соответствовать формату <i>example@mail.com</i>!
+                        </span>
+
+                        <input
+                            required={true}
+                            type='tel' placeholder='x-xxx-xxx-xx-xx'
+                            className='cart_input'
+                            id='phone'
+                            onChange={changeHandler}
+                        />
+                        <span className='input_error' id='phone_error'>
+                            Номер телефона должен соответствовать формату <i>8-(912)-345-67-89</i>!
+                        </span>
+
+                        <button className='cart_order_button'
+                            disabled={
+                                !checkInputs(cartInputs.name, cartInputs.email, cartInputs.phone)
+                                || cartItems.length === 0
+                            }
+                            onClick={
+                                () => {
+                                    PlaceOrder(
+                                        cartInputs.email, cartInputs.phone, cartInputs.name,
+                                        cartItems.map((item) => item.quantity),
+                                        cartItems.map((item) => item.id),
+                                        cartItems.map((item) => item.switchType[0]),
+                                    );
+                                    clearCart();
+                                }
+                            }>
+                            Оформить заказ
+                        </button>
+                    </form>
                 </Modal.Footer>
 
-            </Modal>
+            </Modal >
         </>
     );
 }

@@ -1,23 +1,27 @@
 import { React, useState, useContext, useEffect } from "react";
 import { CartContext } from "../context/cart";
-
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default function ProductOrderCard(product) {
     const { cartItems, addToCart } = useContext(CartContext);
     const [count, setCount] = useState(1);
-    const [switchCoeff, setSwitchCoeff] = useState(1.0);
+    const [switchType, setSwitchType] = useState(
+        [
+            product.switches ? Array.from(product.switches)[0][0] : null,
+            1.0
+        ]);
     const switchesKeyValuePairs = product.switches ? Array.from(product.switches) : null;
 
     function handleSwitchTypeChange(element) {
         switch (element.target.value) {
             case 'blue':
-                setSwitchCoeff(1.0);
+                setSwitchType([element.target.value, 1.0]);
                 break;
             case 'red':
-                setSwitchCoeff(1.2);
+                setSwitchType([element.target.value, 1.2]);
                 break;
             case 'black':
-                setSwitchCoeff(1.4);
+                setSwitchType([element.target.value, 1.4]);
                 break;
             default:
                 alert('Something went wrong!');
@@ -32,6 +36,12 @@ export default function ProductOrderCard(product) {
     function decreaseCount() {
         setCount(count - 1);
     }
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Товар добавлен в корзину!
+        </Tooltip>
+    );
 
     return (
         <div className="product_card" id={product.id}>
@@ -57,16 +67,22 @@ export default function ProductOrderCard(product) {
 
             <br />
 
-            <span className="price">{Math.round(product.price * count * switchCoeff)}₽</span>
+            <span className="price">{Math.round(product.price * count * switchType[1])}₽</span>
 
             <div className="count_box">
                 <input type="button" value="-" className="decrease" onClick={decreaseCount} disabled={count <= 1} />
                 <input type="text" value={count} className="count" readOnly="readonly" />
                 <input type="button" value="+" className="increase" onClick={increaseCount} disabled={count >= product.max_order} />
-                <input type="button" value=" " className="purchase"
-                    onClick={() => {
-                        addToCart({...product, switchCoeff});
-                    }} />
+                <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip}
+                >
+                    <input type="button" value=" " className="purchase"
+                        onClick={() => {
+                            addToCart({ ...product, switchType: switchType }, count);
+                        }} />
+                </OverlayTrigger>
             </div>
 
         </div>

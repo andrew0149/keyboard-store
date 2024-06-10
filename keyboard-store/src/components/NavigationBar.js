@@ -19,7 +19,6 @@ export default function NavigationBar() {
                     <Nav className="me-auto">
                         <Nav.Link href="#bestsellers">Бестселлеры</Nav.Link>
                         <Nav.Link href="#products">Все товары</Nav.Link>
-                        <Nav.Link href="#reviews">Отзывы</Nav.Link>
                         <Nav.Link href="#about_us">О нас</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
