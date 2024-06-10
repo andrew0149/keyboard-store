@@ -50,6 +50,7 @@ app.get('/bestsellers_list', async (req, res) => {
     }
 })
 app.post('/place_order', async (req, res) => {
+<<<<<<< HEAD
     try {
         const reply = await req.body;
         try {
@@ -75,6 +76,28 @@ app.post('/place_order', async (req, res) => {
         console.log(err)
         res.status(500).send('some error has occured');
     }
+=======
+	try{
+	 const reply = await req.body;
+	 try{
+	  
+	  const values = await reply["values"];	 
+	  const query = `insert into orders ("email", "phone", "name","amount", "keyboard_ids") values ($1, $2, $3, $4, $5) returning id`;	 
+	  const result = await pool.query(query, values);
+	  const update_query = `update shoplist set stock = stock - $1 where id = $2;`
+	  for(index in values[4]){
+		update_values = [values[3][index], values[4][index]]
+		const update_result = await pool.query(update_query, update_values);
+	  }
+	  res.status(201).send({ message: 'Order placed', orderID: result.rows[0].id});
+	 }
+	catch (err){
+	console.log(err)}
+	}
+	catch (err){
+	console.log(err)
+	res.status(500).send('some error has occured');}
+>>>>>>> origin/backend
 })
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
