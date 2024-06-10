@@ -50,7 +50,6 @@ app.get('/bestsellers_list', async (req, res) => {
     }
 })
 app.post('/place_order', async (req, res) => {
-<<<<<<< HEAD
     try {
         const reply = await req.body;
         try {
@@ -76,7 +75,6 @@ app.post('/place_order', async (req, res) => {
         console.log(err)
         res.status(500).send('some error has occured');
     }
-=======
 	try{
 	 const reply = await req.body;
 	 try{
@@ -97,7 +95,7 @@ app.post('/place_order', async (req, res) => {
 	catch (err){
 	console.log(err)
 	res.status(500).send('some error has occured');}
->>>>>>> origin/backend
+
 })
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
